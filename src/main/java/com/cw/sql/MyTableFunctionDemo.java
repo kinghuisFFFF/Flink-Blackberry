@@ -1,5 +1,6 @@
 package com.cw.sql;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.table.annotation.DataTypeHint;
@@ -10,7 +11,6 @@ import org.apache.flink.table.functions.TableFunction;
 import org.apache.flink.types.Row;
 
 import static org.apache.flink.table.api.Expressions.$;
-import static org.apache.flink.table.api.Expressions.call;
 
 /**
  * TODO
@@ -20,7 +20,7 @@ import static org.apache.flink.table.api.Expressions.call;
  */
 public class MyTableFunctionDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
 
 
         DataStreamSource<String> strDS = env.fromElements(

@@ -1,6 +1,7 @@
 package com.cw.sql;
 
 import com.cw.bean.WaterSensor;
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.table.api.Table;
@@ -14,7 +15,7 @@ import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
  */
 public class TableStreamDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
 
 
         DataStreamSource<WaterSensor> sensorDS = env.fromElements(

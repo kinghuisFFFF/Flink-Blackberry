@@ -1,10 +1,8 @@
 package com.cw.source;
 
 import com.cw.bean.TrafficData;
-import org.apache.commons.math3.random.RandomDataGenerator;
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.api.common.typeinfo.TypeHint;
-import org.apache.flink.api.common.typeinfo.Types;
-import org.apache.flink.connector.datagen.source.GeneratorFunction;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.source.datagen.DataGeneratorSource;
 
@@ -14,7 +12,7 @@ import org.apache.flink.streaming.api.functions.source.datagen.DataGeneratorSour
 public class GeneratorSourceDemo {
     public static void main(String[] args) throws Exception {
         // 创建env对象
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         // 创建DataGeneratorSource，传入上面自定义的数据生成器
         DataGeneratorSource<TrafficData> trafficDataDataGeneratorSource = new DataGeneratorSource<>(new TrafficData.TrafficDataGenerator());
 

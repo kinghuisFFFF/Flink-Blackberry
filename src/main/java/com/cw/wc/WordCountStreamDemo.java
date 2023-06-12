@@ -1,5 +1,6 @@
 package com.cw.wc;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.api.java.tuple.Tuple2;
@@ -18,7 +19,7 @@ import org.apache.flink.util.Collector;
 public class WordCountStreamDemo {
     public static void main(String[] args) throws Exception {
         // TODO 1.创建执行环境
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
 
         // TODO 2.读取数据:从文件读
         DataStreamSource<String> lineDS = env.readTextFile("input/word.txt");

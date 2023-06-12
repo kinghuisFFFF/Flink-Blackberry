@@ -1,5 +1,6 @@
 package com.cw.combine;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.streaming.api.datastream.ConnectedStreams;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
@@ -14,7 +15,7 @@ import org.apache.flink.streaming.api.functions.co.CoMapFunction;
  */
 public class ConnectDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(1);
 
         DataStreamSource<Integer> source1 = env.fromElements(1, 2, 3);

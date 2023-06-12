@@ -2,11 +2,10 @@ package com.cw.window;
 
 import com.cw.bean.MyGeneratorFunction2;
 import com.cw.bean.WaterSensor;
-import com.cw.functions.WaterSensorMapFunction;
+import com.cw.utils.FilnkUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.functions.AggregateFunction;
-import org.apache.flink.api.common.functions.ReduceFunction;
 import org.apache.flink.api.common.typeinfo.TypeHint;
 import org.apache.flink.api.common.typeinfo.Types;
 import org.apache.flink.connector.datagen.source.DataGeneratorSource;
@@ -15,7 +14,6 @@ import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.datastream.WindowedStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
-import org.apache.flink.streaming.api.functions.windowing.WindowFunction;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
@@ -29,7 +27,7 @@ import org.apache.flink.util.Collector;
  */
 public class WindowAggregateAndProcessDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(1);
 
 

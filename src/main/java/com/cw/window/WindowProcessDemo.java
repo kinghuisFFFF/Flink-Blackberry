@@ -2,7 +2,7 @@ package com.cw.window;
 
 import com.cw.bean.MyGeneratorFunction2;
 import com.cw.bean.WaterSensor;
-import com.cw.functions.WaterSensorMapFunction;
+import com.cw.utils.FilnkUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.typeinfo.TypeHint;
@@ -26,7 +26,7 @@ import org.apache.flink.util.Collector;
  */
 public class WindowProcessDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(1);
 
 

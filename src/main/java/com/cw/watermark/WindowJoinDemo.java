@@ -1,5 +1,6 @@
 package com.cw.watermark;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.functions.JoinFunction;
 import org.apache.flink.api.java.tuple.Tuple2;
@@ -18,7 +19,7 @@ import org.apache.flink.streaming.api.windowing.time.Time;
  */
 public class WindowJoinDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(1);
 
         SingleOutputStreamOperator<Tuple2<String, Integer>> ds1 = env

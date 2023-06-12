@@ -1,5 +1,6 @@
 package com.cw.checkpoint;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.connector.kafka.source.KafkaSource;
@@ -18,7 +19,7 @@ import java.time.Duration;
 public class KafkaEOSDemo2 {
     public static void main(String[] args) throws Exception {
 
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
 
         // 消费 在前面使用两阶段提交写入的Topic
         KafkaSource<String> kafkaSource = KafkaSource.<String>builder()

@@ -1,5 +1,6 @@
 package com.cw.checkpoint;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.connector.base.DeliveryGuarantee;
@@ -23,7 +24,7 @@ import java.time.Duration;
  */
 public class KafkaEOSDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         // 代码中用到hdfs，需要导入hadoop依赖、指定访问hdfs的用户名
         System.setProperty("HADOOP_USER_NAME", "atcw");
 

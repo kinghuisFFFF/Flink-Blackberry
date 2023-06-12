@@ -1,5 +1,6 @@
 package com.cw.sql;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.api.java.tuple.Tuple3;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
@@ -18,7 +19,7 @@ import static org.apache.flink.table.api.Expressions.$;
  */
 public class MyAggregateFunctionDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
 
 
         //  姓名，分数，权重

@@ -2,6 +2,7 @@ package com.cw.process;
 
 import com.cw.bean.WaterSensor;
 import com.cw.functions.WaterSensorMapFunction;
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.streaming.api.TimerService;
 import org.apache.flink.streaming.api.datastream.KeyedStream;
@@ -20,7 +21,7 @@ import java.time.Duration;
  */
 public class KeyedProcessTimerDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(1);
 
 

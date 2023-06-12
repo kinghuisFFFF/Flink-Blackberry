@@ -1,5 +1,6 @@
 package com.cw.source;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
@@ -12,7 +13,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 public class CollectionDemo {
     public static void main(String[] args) throws Exception {
 
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
 
         // TODO 从集合读取数据
         DataStreamSource<Integer> source = env

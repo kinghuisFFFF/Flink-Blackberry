@@ -1,5 +1,6 @@
 package com.cw.sql;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.table.api.Table;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
@@ -14,7 +15,7 @@ import static org.apache.flink.table.api.Expressions.$;
  */
 public class SqlDemo {
     public static void main(String[] args) {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
 
         // TODO 1.创建表环境
         // 1.1 写法一：

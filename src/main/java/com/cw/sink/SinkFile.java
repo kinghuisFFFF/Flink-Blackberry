@@ -1,5 +1,6 @@
 package com.cw.sink;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.serialization.SimpleStringEncoder;
 import org.apache.flink.api.common.typeinfo.Types;
@@ -27,7 +28,7 @@ import java.time.ZoneId;
  */
 public class SinkFile {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
 
         // TODO 每个目录中，都有 并行度个数的 文件在写入
         env.setParallelism(2);

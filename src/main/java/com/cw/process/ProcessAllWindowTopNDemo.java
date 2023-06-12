@@ -2,6 +2,7 @@ package com.cw.process;
 
 import com.cw.bean.WaterSensor;
 import com.cw.functions.WaterSensorMapFunction;
+import com.cw.utils.FilnkUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.java.tuple.Tuple2;
@@ -24,7 +25,7 @@ import java.util.*;
  */
 public class ProcessAllWindowTopNDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(1);
 
 

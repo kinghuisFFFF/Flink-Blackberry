@@ -19,7 +19,7 @@ import org.apache.flink.util.OutputTag;
  */
 public class SideOutputDemo {
     public static void main(String[] args) throws Exception {
-//        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+//        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         StreamExecutionEnvironment env = StreamExecutionEnvironment.createLocalEnvironmentWithWebUI(new Configuration());
 
         env.setParallelism(1);

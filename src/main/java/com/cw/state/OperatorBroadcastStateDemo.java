@@ -2,7 +2,10 @@ package com.cw.state;
 
 import com.cw.bean.WaterSensor;
 import com.cw.functions.WaterSensorMapFunction;
-import org.apache.flink.api.common.state.*;
+import com.cw.utils.FilnkUtils;
+import org.apache.flink.api.common.state.BroadcastState;
+import org.apache.flink.api.common.state.MapStateDescriptor;
+import org.apache.flink.api.common.state.ReadOnlyBroadcastState;
 import org.apache.flink.api.common.typeinfo.Types;
 import org.apache.flink.streaming.api.datastream.BroadcastConnectedStream;
 import org.apache.flink.streaming.api.datastream.BroadcastStream;
@@ -20,7 +23,7 @@ import org.apache.flink.util.Collector;
  */
 public class OperatorBroadcastStateDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(2);
 
 
