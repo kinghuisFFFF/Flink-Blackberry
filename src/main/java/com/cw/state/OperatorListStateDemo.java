@@ -1,5 +1,6 @@
 package com.cw.state;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.state.ListState;
 import org.apache.flink.api.common.state.ListStateDescriptor;
@@ -17,7 +18,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
  */
 public class OperatorListStateDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(2);
 
         env

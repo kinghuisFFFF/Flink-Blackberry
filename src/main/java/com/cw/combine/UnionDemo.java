@@ -1,5 +1,6 @@
 package com.cw.combine;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -12,7 +13,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
  */
 public class UnionDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(1);
 
         DataStreamSource<Integer> source1 = env.fromElements(1, 2, 3);

@@ -2,6 +2,7 @@ package com.cw.window;
 
 import com.cw.bean.WaterSensor;
 import com.cw.functions.WaterSensorMapFunction;
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.streaming.api.datastream.KeyedStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.datastream.WindowedStream;
@@ -18,7 +19,7 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
  */
 public class WindowApiDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(1);
 
 

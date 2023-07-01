@@ -1,5 +1,6 @@
 package com.cw.sink;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -15,7 +16,7 @@ import java.sql.Connection;
  */
 public class SinkCustom {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(1);
 
         SingleOutputStreamOperator<String> sensorDS = env

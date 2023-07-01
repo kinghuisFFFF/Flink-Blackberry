@@ -1,8 +1,13 @@
 package com.cw.process;
 
+import com.cw.bean.MyGeneratorFunction2;
 import com.cw.bean.WaterSensor;
-import com.cw.functions.WaterSensorMapFunction;
+import com.cw.utils.FilnkUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
+import org.apache.flink.api.common.typeinfo.TypeHint;
+import org.apache.flink.api.common.typeinfo.Types;
+import org.apache.flink.connector.datagen.source.DataGeneratorSource;
 import org.apache.flink.streaming.api.TimerService;
 import org.apache.flink.streaming.api.datastream.KeyedStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
@@ -11,6 +16,7 @@ import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import org.apache.flink.util.Collector;
 
 import java.time.Duration;
+import java.util.TimeZone;
 
 /**
  * TODO
@@ -20,18 +26,26 @@ import java.time.Duration;
  */
 public class KeyedProcessTimerDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(1);
 
 
-        SingleOutputStreamOperator<WaterSensor> sensorDS = env
-                .socketTextStream("tencentcloud.yawujia.cn", 8082)
-                .map(new WaterSensorMapFunction())
-                .assignTimestampsAndWatermarks(
-                        WatermarkStrategy
-                                .<WaterSensor>forBoundedOutOfOrderness(Duration.ofSeconds(3))
-                                .withTimestampAssigner((element, ts) -> element.getTs() * 1000L)
-                );
+//        SingleOutputStreamOperator<WaterSensor> sensorDS = env
+//                .socketTextStream("tencentcloud.yawujia.cn", 8082)
+//                .map(new WaterSensorMapFunction())
+//                .assignTimestampsAndWatermarks(
+//                        WatermarkStrategy
+//                                .<WaterSensor>forBoundedOutOfOrderness(Duration.ofSeconds(3))
+//                                .withTimestampAssigner((element, ts) -> element.getTs() * 1000L)
+//                );
+
+        DataGeneratorSource dataGeneratorSource = new DataGeneratorSource(new MyGeneratorFunction2(), Long.MAX_VALUE, Types.POJO(WaterSensor.class));
+        SingleOutputStreamOperator<WaterSensor> sensorDS = env.fromSource(dataGeneratorSource, WatermarkStrategy
+                .<WaterSensor>forBoundedOutOfOrderness(Duration.ofSeconds(3))
+                .withTimestampAssigner((element, ts) -> element.getTs() * 1000L), "data-generator")
+                // 指定返回类型
+                .returns(new TypeHint<WaterSensor>() {
+                });
 
 
         KeyedStream<WaterSensor, String> sensorKS = sensorDS.keyBy(sensor -> sensor.getId());
@@ -57,7 +71,8 @@ public class KeyedProcessTimerDemo {
                         // 1、事件时间的案例
                         Long currentEventTime = ctx.timestamp(); // 数据中提取出来的事件时间
                         timerService.registerEventTimeTimer(5000L);
-                        System.out.println("当前key=" + currentKey + ",当前时间=" + currentEventTime + ",注册了一个5s的定时器");
+                        String currentEventTimeS = DateFormatUtils.format(currentEventTime/1000, "yyyy-MM-dd HH:mm:ss.SSS", TimeZone.getTimeZone("Asia/Shanghai"));
+                        System.out.println("当前key=" + currentKey + ",当前时间=" + currentEventTimeS + ",注册了一个5s的定时器");
 
                         // 2、处理时间的案例
 //                        long currentTs = timerService.currentProcessingTime();

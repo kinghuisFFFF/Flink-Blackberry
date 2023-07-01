@@ -1,5 +1,6 @@
 package com.cw.wc;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.api.common.typeinfo.Types;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
@@ -16,7 +17,7 @@ import org.apache.flink.util.Collector;
 public class WordCountStreamUnboundedDemo {
     public static void main(String[] args) throws Exception {
         // TODO 1. 创建执行环境
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         // IDEA运行时，也可以看到webui，一般用于本地测试
         // 需要引入一个依赖 flink-runtime-web
         // 在idea运行，不指定并行度，默认就是 电脑的 线程数

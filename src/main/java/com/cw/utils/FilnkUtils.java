@@ -23,19 +23,21 @@ public class FilnkUtils {
     }
 
     public static StreamExecutionEnvironment getExecutionEnvironmentPro() {
+        System.setProperty("HADOOP_USER_NAME","root");
         return StreamExecutionEnvironment.getExecutionEnvironment();
     }
 
     public static StreamExecutionEnvironment getStreamExecutionEnvironmentDev() {
+        System.setProperty("HADOOP_USER_NAME","root");
         // TODO 1. 创建执行环境
-//        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+//        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         // IDEA运行时，也可以看到webui，一般用于本地测试
         // 需要引入一个依赖 flink-runtime-web
         Configuration configuration = new Configuration();
 //        configuration.setString("rest.bind-port", "8081");
         //指定 Flink Web UI 端口为9091
 //        configuration.setInteger("rest.port", 8082);
-//        configuration.setInteger(RestOptions.PORT, 8081);
+        configuration.setInteger(RestOptions.PORT, 8081);
 //        configuration.setString("rest.port","9091-9099"); //指定 Flink Web UI 端口为9091
 //        configuration.setString("rest.port","9093"); //指定 Flink Web UI 端口为9091
         StreamExecutionEnvironment env = StreamExecutionEnvironment.createLocalEnvironmentWithWebUI(configuration);

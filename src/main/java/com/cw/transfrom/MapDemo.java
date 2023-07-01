@@ -2,6 +2,7 @@ package com.cw.transfrom;
 
 import com.cw.bean.WaterSensor;
 import com.cw.functions.MapFunctionImpl;
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
@@ -15,7 +16,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
  */
 public class MapDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(1);
 
         DataStreamSource<WaterSensor> sensorDS = env.fromElements(

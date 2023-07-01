@@ -1,5 +1,6 @@
 package com.cw.combine;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.api.java.tuple.Tuple3;
 import org.apache.flink.streaming.api.datastream.ConnectedStreams;
@@ -22,7 +23,7 @@ import java.util.Map;
  */
 public class ConnectKeybyDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(2);
 
         DataStreamSource<Tuple2<Integer, String>> source1 = env.fromElements(

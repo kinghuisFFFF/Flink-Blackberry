@@ -1,5 +1,6 @@
 package com.cw.wc;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.api.java.tuple.Tuple2;
@@ -18,7 +19,7 @@ import org.apache.flink.util.Collector;
 public class WordCountStreamDemo {
     public static void main(String[] args) throws Exception {
         // TODO 1.创建执行环境
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
 
         // TODO 2.读取数据:从文件读
         DataStreamSource<String> lineDS = env.readTextFile("input/word.txt");
@@ -60,7 +61,7 @@ public class WordCountStreamDemo {
 }
 
 /**
- * 接口 A，里面有一个方法a()
+ * 接口 WatermarkLateDemo3，里面有一个方法a()
  * 1、正常实现接口步骤：
  * <p>
  * 1.1 定义一个class B  实现 接口A、方法a()
@@ -68,7 +69,7 @@ public class WordCountStreamDemo {
  * <p>
  * <p>
  * 2、接口的匿名实现类：
- * new A(){
+ * new WatermarkLateDemo3(){
  * a(){
  * <p>
  * }

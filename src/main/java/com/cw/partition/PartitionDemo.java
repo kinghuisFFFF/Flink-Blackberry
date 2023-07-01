@@ -13,7 +13,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 public class PartitionDemo {
     public static void main(String[] args) throws Exception {
         // TODO 1. 创建执行环境
-//        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+//        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         StreamExecutionEnvironment env = StreamExecutionEnvironment.createLocalEnvironmentWithWebUI(new Configuration());
 
         env.setParallelism(2);

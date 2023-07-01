@@ -1,6 +1,7 @@
 package com.cw.aggreagte;
 
 import com.cw.bean.WaterSensor;
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.api.common.functions.ReduceFunction;
 import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
@@ -16,7 +17,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
  */
 public class ReduceDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(1);
 
 

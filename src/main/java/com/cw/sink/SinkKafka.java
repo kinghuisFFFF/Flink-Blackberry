@@ -2,6 +2,7 @@ package com.cw.sink;
 
 import com.cw.bean.MyGeneratorFunction;
 import com.cw.bean.TrafficData2;
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.api.common.typeinfo.TypeHint;
@@ -23,7 +24,7 @@ import org.apache.kafka.clients.producer.ProducerConfig;
  */
 public class SinkKafka {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(1);
 
         // 如果是精准一次，必须开启checkpoint（后续章节介绍）

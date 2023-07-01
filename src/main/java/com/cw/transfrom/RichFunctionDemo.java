@@ -14,7 +14,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
  */
 public class RichFunctionDemo {
     public static void main(String[] args) throws Exception {
-//        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+//        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         StreamExecutionEnvironment env = StreamExecutionEnvironment.createLocalEnvironmentWithWebUI(new Configuration());
         env.setParallelism(2);
 

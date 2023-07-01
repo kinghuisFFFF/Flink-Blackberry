@@ -17,7 +17,7 @@ import org.apache.flink.util.Collector;
 public class OperatorChainDemo {
     public static void main(String[] args) throws Exception {
         // TODO 1. 创建执行环境
-//        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+//        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         // IDEA运行时，也可以看到webui，一般用于本地测试
         // 需要引入一个依赖 flink-runtime-web
         StreamExecutionEnvironment env = StreamExecutionEnvironment.createLocalEnvironmentWithWebUI(new Configuration());

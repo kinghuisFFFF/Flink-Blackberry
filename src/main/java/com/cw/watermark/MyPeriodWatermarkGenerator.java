@@ -37,11 +37,15 @@ public class MyPeriodWatermarkGenerator<T> implements WatermarkGenerator<T> {
 
     /**
      * 周期性调用： 发射 watermark
-     *
+     *我们在 onPeriodicEmit()里调用 output.emitWatermark()，就可以发出水位线了；这个方法
+     * 由系统框架周期性地调用，默认 200ms 一次。
+     * 如果想修改默认周期时间，可以通过下面方法修改。例如：修改为 400ms
+     * env.getConfig().setAutoWatermarkInterval(400L);
      * @param output
      */
     @Override
     public void onPeriodicEmit(WatermarkOutput output) {
+        // 发射水位线，默认 200ms 调用一次
         output.emitWatermark(new Watermark(maxTs - delayTs - 1));
         System.out.println("调用onPeriodicEmit方法，生成watermark=" + (maxTs - delayTs - 1));
     }

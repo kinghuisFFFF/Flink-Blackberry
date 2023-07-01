@@ -1,10 +1,13 @@
 package com.cw.watermark;
 
+import com.cw.bean.MyGeneratorFunction2;
 import com.cw.bean.WaterSensor;
-import com.cw.functions.WaterSensorMapFunction;
+import com.cw.utils.FilnkUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
+import org.apache.flink.api.common.typeinfo.TypeHint;
 import org.apache.flink.api.common.typeinfo.Types;
+import org.apache.flink.connector.datagen.source.DataGeneratorSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
@@ -24,13 +27,19 @@ import java.time.Duration;
  */
 public class WatermarkLateDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(1);
 
 
-        SingleOutputStreamOperator<WaterSensor> sensorDS = env
-                .socketTextStream("tencentcloud.yawujia.cn", 8082)
-                .map(new WaterSensorMapFunction());
+//        SingleOutputStreamOperator<WaterSensor> sensorDS = env
+//                .socketTextStream("tencentcloud.yawujia.cn", 8082)
+//                .map(new WaterSensorMapFunction());
+
+        DataGeneratorSource dataGeneratorSource = new DataGeneratorSource(new MyGeneratorFunction2(), Long.MAX_VALUE, Types.POJO(WaterSensor.class));
+        SingleOutputStreamOperator<WaterSensor> sensorDS = env.fromSource(dataGeneratorSource, WatermarkStrategy.noWatermarks(), "data-generator")
+                // 指定返回类型
+                .returns(new TypeHint<WaterSensor>() {
+                });
 
         WatermarkStrategy<WaterSensor> watermarkStrategy = WatermarkStrategy
                 .<WaterSensor>forBoundedOutOfOrderness(Duration.ofSeconds(3))

@@ -1,5 +1,6 @@
 package com.cw.watermark;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.typeinfo.Types;
@@ -23,7 +24,7 @@ import java.time.Duration;
  */
 public class IntervalJoinWithLateDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(1);
 
         SingleOutputStreamOperator<Tuple2<String, Integer>> ds1 = env

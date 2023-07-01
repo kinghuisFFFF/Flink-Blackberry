@@ -1,6 +1,7 @@
 package com.cw.watermark;
 
 import com.cw.partition.MyPartitioner;
+import com.cw.utils.FilnkUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
@@ -12,6 +13,7 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
 import java.time.Duration;
+import java.util.TimeZone;
 
 /**
  * TODO
@@ -21,14 +23,15 @@ import java.time.Duration;
  */
 public class WatermarkIdlenessDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
 
         env.setParallelism(2);
 
 
         // 自定义分区器：数据%分区数，只输入奇数，都只会去往map的一个子任务
         SingleOutputStreamOperator<Integer> socketDS = env
-                .socketTextStream("tencentcloud.yawujia.cn", 8082)
+//                .socketTextStream("tencentcloud.yawujia.cn", 8082)
+                .socketTextStream("hadoop361", 8888)
                 .partitionCustom(new MyPartitioner(), r -> r)
                 .map(r -> Integer.parseInt(r))
                 .assignTimestampsAndWatermarks(
@@ -48,8 +51,8 @@ public class WatermarkIdlenessDemo {
                     public void process(Integer integer, Context context, Iterable<Integer> elements, Collector<String> out) throws Exception {
                         long startTs = context.window().getStart();
                         long endTs = context.window().getEnd();
-                        String windowStart = DateFormatUtils.format(startTs, "yyyy-MM-dd HH:mm:ss.SSS");
-                        String windowEnd = DateFormatUtils.format(endTs, "yyyy-MM-dd HH:mm:ss.SSS");
+                        String windowStart = DateFormatUtils.format(startTs, "yyyy-MM-dd HH:mm:ss.SSS", TimeZone.getTimeZone("Asia/Shanghai"));
+                        String windowEnd = DateFormatUtils.format(endTs, "yyyy-MM-dd HH:mm:ss.SSS",TimeZone.getTimeZone("Asia/Shanghai"));
 
                         long count = elements.spliterator().estimateSize();
 

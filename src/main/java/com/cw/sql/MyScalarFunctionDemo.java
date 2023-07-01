@@ -1,6 +1,7 @@
 package com.cw.sql;
 
 import com.cw.bean.WaterSensor;
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.table.annotation.DataTypeHint;
@@ -20,7 +21,7 @@ import static org.apache.flink.table.api.Expressions.call;
  */
 public class MyScalarFunctionDemo {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
 
 
         DataStreamSource<WaterSensor> sensorDS = env.fromElements(

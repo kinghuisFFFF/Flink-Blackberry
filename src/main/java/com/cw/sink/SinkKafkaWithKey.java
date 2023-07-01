@@ -1,5 +1,6 @@
 package com.cw.sink;
 
+import com.cw.utils.FilnkUtils;
 import org.apache.flink.api.common.restartstrategy.RestartStrategies;
 import org.apache.flink.connector.base.DeliveryGuarantee;
 import org.apache.flink.connector.kafka.sink.KafkaRecordSerializationSchema;
@@ -9,6 +10,7 @@ import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
+
 import javax.annotation.Nullable;
 import java.nio.charset.StandardCharsets;
 
@@ -20,7 +22,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class SinkKafkaWithKey {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(1);
 
         env.enableCheckpointing(2000, CheckpointingMode.EXACTLY_ONCE);
