@@ -61,7 +61,7 @@ public class WordCountStreamDemo {
 }
 
 /**
- * 接口 A，里面有一个方法a()
+ * 接口 WatermarkLateDemo3，里面有一个方法a()
  * 1、正常实现接口步骤：
  * <p>
  * 1.1 定义一个class B  实现 接口A、方法a()
@@ -69,7 +69,7 @@ public class WordCountStreamDemo {
  * <p>
  * <p>
  * 2、接口的匿名实现类：
- * new A(){
+ * new WatermarkLateDemo3(){
  * a(){
  * <p>
  * }

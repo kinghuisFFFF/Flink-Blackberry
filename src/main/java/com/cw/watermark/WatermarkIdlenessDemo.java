@@ -13,6 +13,7 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
 import java.time.Duration;
+import java.util.TimeZone;
 
 /**
  * TODO
@@ -29,7 +30,8 @@ public class WatermarkIdlenessDemo {
 
         // 自定义分区器：数据%分区数，只输入奇数，都只会去往map的一个子任务
         SingleOutputStreamOperator<Integer> socketDS = env
-                .socketTextStream("tencentcloud.yawujia.cn", 8082)
+//                .socketTextStream("tencentcloud.yawujia.cn", 8082)
+                .socketTextStream("hadoop361", 8888)
                 .partitionCustom(new MyPartitioner(), r -> r)
                 .map(r -> Integer.parseInt(r))
                 .assignTimestampsAndWatermarks(
@@ -49,8 +51,8 @@ public class WatermarkIdlenessDemo {
                     public void process(Integer integer, Context context, Iterable<Integer> elements, Collector<String> out) throws Exception {
                         long startTs = context.window().getStart();
                         long endTs = context.window().getEnd();
-                        String windowStart = DateFormatUtils.format(startTs, "yyyy-MM-dd HH:mm:ss.SSS");
-                        String windowEnd = DateFormatUtils.format(endTs, "yyyy-MM-dd HH:mm:ss.SSS");
+                        String windowStart = DateFormatUtils.format(startTs, "yyyy-MM-dd HH:mm:ss.SSS", TimeZone.getTimeZone("Asia/Shanghai"));
+                        String windowEnd = DateFormatUtils.format(endTs, "yyyy-MM-dd HH:mm:ss.SSS",TimeZone.getTimeZone("Asia/Shanghai"));
 
                         long count = elements.spliterator().estimateSize();
 

@@ -1,12 +1,15 @@
 package com.cw.state;
 
+import com.cw.bean.MyGeneratorFunction2;
 import com.cw.bean.WaterSensor;
-import com.cw.functions.WaterSensorMapFunction;
 import com.cw.utils.FilnkUtils;
+import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.state.BroadcastState;
 import org.apache.flink.api.common.state.MapStateDescriptor;
 import org.apache.flink.api.common.state.ReadOnlyBroadcastState;
+import org.apache.flink.api.common.typeinfo.TypeHint;
 import org.apache.flink.api.common.typeinfo.Types;
+import org.apache.flink.connector.datagen.source.DataGeneratorSource;
 import org.apache.flink.streaming.api.datastream.BroadcastConnectedStream;
 import org.apache.flink.streaming.api.datastream.BroadcastStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
@@ -14,6 +17,8 @@ import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.co.BroadcastProcessFunction;
 import org.apache.flink.util.Collector;
+
+import java.time.Duration;
 
 /**
  * TODO 水位超过指定的阈值发送告警，阈值可以动态修改
@@ -28,9 +33,17 @@ public class OperatorBroadcastStateDemo {
 
 
         // 数据流
-        SingleOutputStreamOperator<WaterSensor> sensorDS = env
-                .socketTextStream("tencentcloud.yawujia.cn", 8082)
-                .map(new WaterSensorMapFunction());
+//        SingleOutputStreamOperator<WaterSensor> sensorDS = env
+//                .socketTextStream("tencentcloud.yawujia.cn", 8082)
+//                .map(new WaterSensorMapFunction());
+
+        DataGeneratorSource dataGeneratorSource = new DataGeneratorSource(new MyGeneratorFunction2(), Long.MAX_VALUE, Types.POJO(WaterSensor.class));
+        SingleOutputStreamOperator<WaterSensor> sensorDS = env.fromSource(dataGeneratorSource, WatermarkStrategy
+                .<WaterSensor>forBoundedOutOfOrderness(Duration.ofSeconds(3))
+                .withTimestampAssigner((element, ts) -> element.getTs() * 1000L), "data-generator")
+                // 指定返回类型
+                .returns(new TypeHint<WaterSensor>() {
+                });
 
         // 配置流（用来广播配置）
         DataStreamSource<String> configDS = env.socketTextStream("tencentcloud.yawujia.cn", 8888);

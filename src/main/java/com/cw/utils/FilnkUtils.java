@@ -23,10 +23,12 @@ public class FilnkUtils {
     }
 
     public static StreamExecutionEnvironment getExecutionEnvironmentPro() {
-        return FilnkUtils.getStreamExecutionEnvironmentDev();
+        System.setProperty("HADOOP_USER_NAME","root");
+        return StreamExecutionEnvironment.getExecutionEnvironment();
     }
 
     public static StreamExecutionEnvironment getStreamExecutionEnvironmentDev() {
+        System.setProperty("HADOOP_USER_NAME","root");
         // TODO 1. 创建执行环境
 //        StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         // IDEA运行时，也可以看到webui，一般用于本地测试
