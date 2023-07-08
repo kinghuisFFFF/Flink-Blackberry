@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+  <property>
+    <name>hbase.rootdir</name>
+    <value>hdfs://hadoop31:9000/hbase</value>
+  </property>
+  <property>
+    <name>hbase.cluster.distributed</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.quorum</name>
+    <value>hadoop31,hadoop32,hadoop33</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.property.dataDir</name>
+    <value>/opt/module/apache-zookeeper-3.5.7-bin/Data</value>
+  </property>
+  <property>
+    <name>hbase.hregion.memstore.flush.size</name>
+    <value>268435456</value>
+  </property>
+  <property>
+    <name>hbase.hregion.max.filesize</name>
+    <value>21474836480</value>
+  </property>
+
+  <!-- phoenix开放namespace映射-->
+  <property>
+    <name>phoenix.schema.isNamespaceMappingEnabled</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>phoenix.schema.mapSystemTablesToNamespace</name>
+    <value>true</value>
+  </property>
+  <!--phoenix二级索引-->
+  <property>
+    <name>hbase.regionserver.wal.codec</name>
+    <value>org.apache.hadoop.hbase.regionserver.wal.IndexedWALEditCodec</value>
+  </property>
+<!-- phoenix关闭校验-->
+<property>
+  <name>hbase.table.sanity.checks</name>
+  <value>false</value>
+</property>
+</configuration>

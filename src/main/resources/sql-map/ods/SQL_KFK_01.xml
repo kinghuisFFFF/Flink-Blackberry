@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+<?xml version="1.0" encoding="UTF-8" ?>
+以上内容就是xml文件的声明，
+version="1.0" version表示xml的版本
+encoding="utf-8"   encoding表示xml文件本身的编码
+-->
+<sqls>
+    <sql01>
+        <![CDATA[
+          CREATE TEMPORARY  TABLE ods_s2 (
+                order_number BIGINT,
+                price        DECIMAL(32,2),
+                buyer        ROW<first_name STRING, last_name STRING>,
+                order_time   TIMESTAMP(3)
+            ) WITH (
+              'connector' = 'kafka',
+              'topic' = 'ods_s2',
+              'properties.bootstrap.servers' = 'hadoop32:9092',
+               'properties.group.id' = 'Group_P1',
+              'format' = 'json',
+               'json.fail-on-missing-field' = 'false',
+             'json.ignore-parse-errors' = 'true'
+            );
+        ]]>
+    </sql01>
+
+    <sql02>
+        <![CDATA[
+          CREATE TEMPORARY  TABLE ods_s2_source (
+                order_number BIGINT,
+                price        DECIMAL(32,2),
+                buyer        ROW<first_name STRING, last_name STRING>,
+                order_time   TIMESTAMP(3) ,
+                `ts` TIMESTAMP(3) METADATA FROM 'timestamp'
+            ) WITH (
+              'connector' = 'kafka',
+              'topic' = 'ods_s2',
+              'properties.bootstrap.servers' = 'hadoop32:9092',
+              'properties.group.id' = 'Group_C1',
+              'scan.startup.mode' = 'earliest-offset',
+              'format' = 'json'
+            );
+        ]]>
+    </sql02>
+
+    <sql04>
+        <![CDATA[
+          CREATE TEMPORARY  TABLE print_s2 (
+                order_number BIGINT,
+                price        DECIMAL(32,2),
+                buyer        ROW<first_name STRING, last_name STRING>,
+                order_time   TIMESTAMP(3) ,
+                `ts` TIMESTAMP(3)
+            ) WITH (
+              'connector' = 'print'
+            );
+        ]]>
+    </sql04>
+
+    <sql03>
+        <![CDATA[
+          insert into ods_s2 select * from Orders4
+        ]]>
+    </sql03>
+
+    <action>
+        <sql05>
+            <![CDATA[
+               insert into print_s1 select * from ods_s2_source
+        ]]>
+        </sql05>
+    </action>
+
+
+</sqls>
