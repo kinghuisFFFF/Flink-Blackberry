@@ -1,0 +1,5 @@
+taos:
+  driver: com.taosdata.jdbc.rs.RestfulDriver
+  host: 192.168.3.28
+  uname: hsapi
+  pwd: Hsapi-2016

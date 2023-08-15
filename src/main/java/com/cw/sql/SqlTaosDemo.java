@@ -28,7 +28,7 @@ import static org.apache.flink.table.api.Expressions.$;
  * @author cjp
  * @version 1.0
  */
-public class SqlHbaseDemo {
+public class SqlTaosDemo {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         StreamExecutionEnvironment env = FilnkUtils.getStreamExecutionEnvironmentDev();
         env.setParallelism(2);
@@ -50,7 +50,7 @@ public class SqlHbaseDemo {
         StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env);
         tableEnv.getConfig().getConfiguration().set(ExecutionCheckpointingOptions.CHECKPOINTING_INTERVAL, Duration.ofSeconds(10));
         tableEnv.getConfig().getConfiguration().set(ExecutionCheckpointingOptions.CHECKPOINTING_MODE, CheckpointingMode.EXACTLY_ONCE);
-        tableEnv.getConfig().getConfiguration().setString("pipeline.name","LABEL CALCULATE 01");
+        tableEnv.getConfig().getConfiguration().setString("pipeline.name","LABEL SqlTaosDemo");
 
         String name = "myhive";
         String defaultDatabase = "ods";
@@ -75,7 +75,7 @@ public class SqlHbaseDemo {
 
 
 
-        Document document = XmlUtil.readXML("sql-map/ods/SQL_Hbase_01.xml");
+        Document document = XmlUtil.readXML("sql-map/ods/SQL_Taos.xml");
         String sql7 = ReadXmlUtils.getTagValueByPath(document, "//sqls/create/sql01");
         String sql8 = ReadXmlUtils.getTagValueByPath(document, "//sqls/create/sql02");
         String sql9 = ReadXmlUtils.getTagValueByPath(document, "//sqls/create/sql05");
