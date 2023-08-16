@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+<?xml version="1.0" encoding="UTF-8" ?>
+以上内容就是xml文件的声明，
+version="1.0" version表示xml的版本
+encoding="utf-8"   encoding表示xml文件本身的编码
+-->
+<sqls>
+    <create>
+        <sql01>
+            <![CDATA[
+          SELECT mean(output_add_m),variance(output_add_m),stddev(output_add_m),corr(output_add_m,output_add_kg),
+          skewness(output_add_m),kurtosis(output_add_m) FROM v_machine_platforms
+        ]]>
+        </sql01>
+
+        <sql02>
+            <![CDATA[
+          CREATE temporary TABLE source (
+                id INT,
+                ts BIGINT,
+                vc INT
+            ) WITH (
+                'connector' = 'datagen',
+                'rows-per-second'='10',
+                'fields.id.kind'='random',
+                'fields.id.min'='1',
+                'fields.id.max'='10',
+                'fields.ts.kind'='sequence',
+                'fields.ts.start'='1',
+                'fields.ts.end'='1000000',
+                'fields.vc.kind'='random',
+                'fields.vc.min'='1',
+                'fields.vc.max'='100'
+            );
+
+        ]]>
+        </sql02>
+
+    </create>
+
+    <action>
+        <sql01>
+            <![CDATA[
+          SELECT mean(output_add_m),variance(output_add_m),stddev(output_add_m),corr(output_add_m,output_add_kg),
+          skewness(output_add_m),kurtosis(output_add_m) FROM v_machine_platforms
+        ]]>
+        </sql01>
+    </action>
+
+
+
+</sqls>

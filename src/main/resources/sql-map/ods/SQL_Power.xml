@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+<?xml version="1.0" encoding="UTF-8" ?>
+以上内容就是xml文件的声明，
+version="1.0" version表示xml的版本
+encoding="utf-8"   encoding表示xml文件本身的编码
+-->
+<sqls>
+    <create>
+        <sql01>
+            <![CDATA[
+          SELECT mean(output_add_m),variance(output_add_m),stddev(output_add_m),corr(output_add_m,output_add_kg),
+          skewness(output_add_m),kurtosis(output_add_m) FROM v_machine_platforms
+        ]]>
+        </sql01>
+    </create>
+
+
+    <transform>
+        <sql01>
+            <![CDATA[
+          SELECT
+	DATE_FORMAT( TUMBLE_START ( rt, INTERVAL '10' SECOND ), 'yyyy-MM-dd HH:mm:ss' ) stt,
+	DATE_FORMAT( TUMBLE_END ( rt, INTERVAL '10' SECOND ), 'yyyy-MM-dd HH:mm:ss' ) edt,
+	producerId,
+	producerName,
+	htime,
+	count( DISTINCT producerId ) gc_count,
+	sum( addActivePower ) gx_power,
+	UNIX_TIMESTAMP( ) * 1000 ts
+FROM
+	power_wide
+GROUP BY
+	producerId,
+	producerName,
+	htime TUMBLE ( rt, INTERVAL '10' SECOND );
+        ]]>
+        </sql01>
+
+        <sql02>
+            <![CDATA[
+          SELECT
+	producerId,
+	producerName,
+	htime,
+	count( DISTINCT producerId ) gc_count,
+	sum( addActivePower ) gx_power,
+	UNIX_TIMESTAMP( ) * 1000 ts
+FROM
+	power_wide
+GROUP BY
+	producerId,
+	producerName
+    htime
+    order by htime desc;
+        ]]>
+        </sql02>
+
+        <sql03>
+            <![CDATA[
+          SELECT id ,
+producerId,
+producerName,
+wm_htime,
+devGroup,
+htime,
+addActivePower,
+ DATE_FORMAT(FROM_UNIXTIME(UNIX_TIMESTAMP()), 'yyyy-MM-dd HH:mm:ss')  crt FROM power_wide
+        ]]>
+        </sql03>
+    </transform>
+
+    <action>
+        <sql01>
+            <![CDATA[
+          SELECT mean(output_add_m),variance(output_add_m),stddev(output_add_m),corr(output_add_m,output_add_kg),
+          skewness(output_add_m),kurtosis(output_add_m) FROM v_machine_platforms
+        ]]>
+        </sql01>
+    </action>
+
+
+</sqls>

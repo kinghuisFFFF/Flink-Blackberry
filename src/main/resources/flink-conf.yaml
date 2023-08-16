@@ -1,1 +1,12 @@
 classloader.check-leaked-classloader: false
+
+restart-strategy: fixed-delay
+restart-strategy.fixed-delay.attempts: 3
+restart-strategy.fixed-delay.delay: 30s
+execution.checkpointing.interval: 1min
+execution.checkpointing.externsalized-checkpoint-retention: RETAIN_ON_CANCELLATION
+state.checkpoints.dir: hdfs:///hadoop31:9000/flink/checkpoints
+state.backend: filesystem
+
+
+

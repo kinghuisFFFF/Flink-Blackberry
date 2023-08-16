@@ -28,7 +28,7 @@ public class MyGeneratorFunction2 implements GeneratorFunction<Long, WaterSensor
     public WaterSensor map(Long randomDataGenerator) throws Exception {
         // 使用随机生成器生成数据，构造流量对象
         return new WaterSensor(
-                "id-"+generator.nextInt(1, 100),
+                "sensor_"+generator.nextInt(1, 100),
                 System.currentTimeMillis(),
                 generator.nextInt(0, 1000)
         );
